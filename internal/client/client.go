@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"time"
 
-	"../apikey"
+	"github.com/jeff2857/Binance-SDK/internal/apikey"
 )
 
 const (
@@ -24,7 +24,7 @@ type Client struct {
 	clnt    *http.Client
 }
 
-func (client *Client) request(method string, endpoint string, params map[string]interface{}, withApiKey bool, withSec bool) ([]byte, error) {
+func (client *Client) Request(method string, endpoint string, params map[string]interface{}, withApiKey bool, withSec bool) ([]byte, error) {
 	if client.clnt == nil {
 		apiKey, secret, err := apikey.Read()
 		if err != nil {
