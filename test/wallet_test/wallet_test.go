@@ -1,14 +1,14 @@
-package main
+package wallet_test
 
 import (
 	"testing"
 
-	"github.com/jeff2857/Binance-SDK/pkg/api"
+	"github.com/jeff2857/Binance-SDK/pkg/api/wallet"
 )
 
-func TestApi(t *testing.T) {
+func TestWallet(t *testing.T) {
 	t.Run("system_status", func(t *testing.T) {
-		res, err := api.GetSystemStatus()
+		res, err := wallet.GetSystemStatus()
 		if err != nil {
 			t.Error(err)
 			return
@@ -16,8 +16,8 @@ func TestApi(t *testing.T) {
 		t.Logf("%s\n", res)
 	})
 
-	t.Run("all_coin", func(t *testing.T) {
-		res, err := api.GetAllCoin()
+	t.Run("all_capital", func(t *testing.T) {
+		res, err := wallet.GetAllCapital()
 		if err != nil {
 			t.Error(err)
 			return
