@@ -47,20 +47,20 @@ func (client *Client) Request(method string, endpoint string, params map[string]
 			urlValues.Set(k, fmt.Sprintf("%v", v))
 		}
 	}
-	req.URL.RawQuery = fmt.Sprintf("%s", urlValues.Encode())
 
 	if withSec {
 		mac := hmac.New(sha256.New, []byte(client.secret))
+
+		timestamp := time.Now().UnixNano() / 1e6
+		urlValues.Set("timestamp", fmt.Sprintf("%d", timestamp))
+
 		mac.Write([]byte(urlValues.Encode()))
 		signature := fmt.Sprintf("%x", mac.Sum(nil))
 
-		timestamp := time.Now().UnixNano() / 1e6
-
-		v := make(url.Values)
-		v.Set("signature", signature)
-		sigParams := fmt.Sprintf("&timestamp=%d&%s", timestamp, v.Encode())
-		req.URL.RawQuery += sigParams
+		urlValues.Set("signature", signature)
 	}
+
+	req.URL.RawQuery = fmt.Sprintf("%s", urlValues.Encode())
 
 	if withApiKey {
 		req.Header.Set("X-MBX-APIKEY", client.apiKey)

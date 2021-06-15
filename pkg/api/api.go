@@ -30,7 +30,9 @@ func GetSystemStatus() ([]byte, error) {
 }
 
 func GetAllCoin() ([]byte, error) {
-	res, err := bClient.Request(GET, E_ALL_COIN, nil, true, true)
+	params := make(map[string]interface{})
+	params["recvWindow"] = 50000
+	res, err := bClient.Request(GET, E_ALL_COIN, params, true, true)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
